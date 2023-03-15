@@ -16,16 +16,18 @@
   </head>
   <body>
     <header class="header">
-      <img
-        src="logo.png"
-        height="68px"
-        width="68px"
-        alt="Today I learned logo"
-      />
-      <h1>Today I learned</h1>
+      <div class="logo">
+        <img
+          src="logo.png"
+          height="68px"
+          width="68px"
+          alt="Today I learned logo"
+        />
+        <h1>Today I learned</h1>
+      </div>
+      <button>Share a fact</button>
     </header>
     <form class="fact-form">
-      <button>Share a fact</button>
       <input type="text" placeholder="Share a fact with the world" />
       <span>200</span>
       <input type="text" placeholder="Trust worthy source..." />
@@ -57,7 +59,9 @@
             <p>
               React is being developed by Meta (formerly facebook)
               <a href="https://opensource.fb.com/" target="_blank">Source</a>
-              <span class="tag"> #Technology# </span>
+              <span class="tag" style="background-color: #3b82f6">
+                #Technology#
+              </span>
             </p>
             <div>
               <button>👍 <strong>24</strong></button>
@@ -65,8 +69,8 @@
               <button>⛔️<strong>4</strong></button>
             </div>
           </li>
-          <li>
-            <p class="fact">
+          <li class="fact">
+            <p>
               Millennial dads spend 3 times as much time with their kids than
               their fathers spent with them. In 1982, 43% of fathers had never
               changed a diaper. Today, that number is down to 3%
@@ -75,7 +79,9 @@
                 target="_blank"
                 >Source</a
               >
-              <span class="tag">#Society</span>
+              <span class="tag" style="background-color: #eab308"
+                >#Society</span
+              >
             </p>
             <div>
               <button>👍 <strong>11</strong></button>
