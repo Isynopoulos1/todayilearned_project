@@ -41,15 +41,7 @@ body {
   width: 68px;
   height: 68px;
 }
-.fact-form {
-  background-color: #292524;
-  margin-bottom: 40px;
-  padding: 16px 32px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-radius: 16px;
-}
+
 h1 {
   font-size: 42px;
   text-transform: uppercase;
@@ -72,6 +64,7 @@ h1 {
   justify-content: space-between;
   border-radius: 16px;
 }
+
 .tag {
   font-size: 14px;
   font-family: "Sono", sans-serif;
@@ -148,6 +141,17 @@ ul {
   width: 100%;
   background-image: none;
 }
+/* FORM */
+
+.fact-form {
+  background-color: #292524;
+  margin-bottom: 40px;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 16px;
+}
 .fact-form input,
 .fact-form select {
   width: 220px;
@@ -169,4 +173,35 @@ ul {
 .fact-form span {
   font-weight: 500;
   font-size: 18px;
+}
+/* RESPONSIVE RULES */
+
+/*MAX- WIDTH 1200PX*/
+@media (max-width: 1200px) {
+  .fact {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+}
+/* MAX WIDTH 1000PX */
+@media (max-width: 1000px) {
+  body {
+    padding: 32px 48px;
+  }
+  .fact-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fact-form input,
+  .fact-form select {
+    width: auto;
+  }
+}
+
+/* MAX WIDTH 900PX*/
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
 }
