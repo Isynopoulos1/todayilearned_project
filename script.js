@@ -32,6 +32,17 @@ const initialFacts = [
     createdIn: 2015,
   },
 ];
+
+const CATEGORIES = [
+  { name: "technology", color: "#3b82f6" },
+  { name: "science", color: "#16a34a" },
+  { name: "finance", color: "#ef4444" },
+  { name: "society", color: "#eab308" },
+  { name: "entertainment", color: "#db2777" },
+  { name: "health", color: "#14b8a6" },
+  { name: "history", color: "#f97316" },
+  { name: "news", color: "#8b5cf6" },
+];
 //selecting DOM elements
 const btn = document.querySelector(".btn-open");
 const form = document.querySelector(".fact-form");
@@ -39,14 +50,28 @@ const factsList = document.querySelector(".facts-list");
 
 //create DOM elements: render facts in list
 factsList.innerHTML = "";
+createFactList(initialFacts);
 
-const htmlArr = initialFacts.map(
-  (fact) => `<li class= "fact"> ${fact.text}</li>`
-);
-console.log(htmlArr);
-const html = htmlArr.join("");
+function createFactList(dataArr) {
+  const htmlArr = dataArr.map(
+    (fact) => `<li class= "fact"> 
+    <p>
+    ${fact.text}
+    <a
+      class="source"
+      href="${fact.source}"
+      target="_blank"
+      >Source</a>
+    </p>
+    <span class="tag" style="background-color: #3b82f6">
+    ${fact.category}</span> </li>`
+  );
+  console.log(htmlArr);
+  const html = htmlArr.join("");
 
-factsList.insertAdjacentHTML("afterbegin", html);
+  factsList.insertAdjacentHTML("afterbegin", html);
+}
+
 // toggle form visibility
 btn.addEventListener("click", function () {
   if (form.classList.contains("hidden")) {
@@ -76,16 +101,7 @@ let votesMindBlowing = 20;
 
 // const calcFactsAge2 = (year) => 2022 - year;
 
-const CATEGORIES = [
-  { name: "technology", color: "#3b82f6" },
-  { name: "science", color: "#16a34a" },
-  { name: "finance", color: "#ef4444" },
-  { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
-  { name: "history", color: "#f97316" },
-  { name: "news", color: "#8b5cf6" },
-];
+
 
 const allCategories = CATEGORIES.map((el) => el.name);
 console.log(allCategories);
