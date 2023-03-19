@@ -34,14 +34,14 @@ const initialFacts = [
 ];
 
 const CATEGORIES = [
-  { name: "technology", color: "#3b82f6" },
-  { name: "science", color: "#16a34a" },
-  { name: "finance", color: "#ef4444" },
-  { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
-  { name: "history", color: "#f97316" },
-  { name: "news", color: "#8b5cf6" },
+  { name: "technology", color: "#00F49B" },
+  { name: "science", color: "#004DFF" },
+  { name: "finance", color: "#FAAF3D" },
+  { name: "society", color: "#FA8BFF" },
+  { name: "entertainment", color: "#8F79EB" },
+  { name: "health", color: "#EAD0B3" },
+  { name: "history", color: "#8095FF" },
+  { name: "news", color: "#EA53AA" },
 ];
 //selecting DOM elements
 const btn = document.querySelector(".btn-open");
@@ -67,6 +67,7 @@ async function loadFacts() {
     }
   );
   const data = await res.json();
+  // const filterData = data.filter((fact) => fact.category === "society");
 
   createFactList(data);
 }
@@ -82,10 +83,12 @@ function createFactList(dataArr) {
       target="_blank"
       >Source</a>
     </p>
-    <span class="tag" style="background-color: #3b82f6">
+    <span class="tag" style="background-color: ${
+      CATEGORIES.find((cat) => cat.name === fact.category).color
+    }">
     ${fact.category}</span> </li>`
   );
-  console.log(htmlArr);
+
   const html = htmlArr.join("");
 
   factsList.insertAdjacentHTML("afterbegin", html);
@@ -101,18 +104,7 @@ btn.addEventListener("click", function () {
     btn.textContent = "share a fact";
   }
 });
-function currentAge(year) {
-  const currentYear = new Date().getFullYear();
-  const age = currentYear - year;
 
-  if (age >= 0) return age;
-  else return console.log("imposible year");
-}
-
-console.log(currentAge(2040));
-
-let votesInteresting = 20;
-let votesMindBlowing = 20;
 /*
 // if (votesInteresting === votesMindBlowing) {
 //   alert("this is equaly mindblowing and interesting");
