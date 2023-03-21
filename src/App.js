@@ -55,16 +55,19 @@ function App() {
     /*define state var */
   }
   const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState(initialFacts);
 
   return (
     <>
       <Header showForm={showForm} setShowForm={setShowForm} />
 
       {/*2.- use state var */}
-      {showForm ? <NewFactForm /> : null}
+      {showForm ? (
+        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
+      ) : null}
       <main className="main">
         <CategoryFilter />
-        <FactList />
+        <FactList facts={facts} />
       </main>
     </>
   );
@@ -93,20 +96,90 @@ function Header({ showForm, setShowForm }) {
     </header>
   );
 }
-function NewFactForm() {
-  return <form className="fact-form"> Fact form </form>;
-}
-
 const CATEGORIES = [
   { name: "technology", color: "#3b82f6" },
   { name: "science", color: "#16a34a" },
   { name: "finance", color: "#ef4444" },
   { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
+  { name: "entertainment", color: "#14b8a6" },
+  { name: "health", color: "#db2777" },
   { name: "history", color: "#f97316" },
   { name: "news", color: "#8b5cf6" },
 ];
+
+function isValidHttpUrl(string) {
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+function NewFactForm({ setFacts, setShowForm }) {
+  const [text, setText] = useState("");
+  const [source, setSource] = useState("http://example.com");
+  const [category, setCategory] = useState("");
+  const textLength = text.length;
+
+  function HandleSumit(e) {
+    // 1 prevent browser reload
+    e.preventDefault();
+    console.log(text, source, category);
+    // 2. check if data is valid
+    if (text && isValidHttpUrl(source) && category && textLength <= 200) {
+      // 3. create a new fact object
+
+      const NewFact = {
+        id: Math.round(Math.random() * 1000000000),
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0,
+        createdIn: new Date().getFullYear(),
+      };
+      // 4. dd the new fact to the ui
+      setFacts((facts) => [NewFact, ...facts]);
+      // 5 reset input fields
+      setText("");
+      setSource("");
+      setCategory("");
+      // 6. close the form
+      setShowForm(false);
+    }
+  }
+
+  return (
+    <form className="fact-form" onSubmit={HandleSumit}>
+      {" "}
+      <input
+        type="text"
+        placeholder="Share a fact with the world"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <span>{200 - textLength}</span>
+      <input
+        type="text"
+        placeholder="Trust worthy source..."
+        value={source}
+        onChange={(e) => setSource(e.target.value)}
+      />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="">Choose category:</option>
+        {CATEGORIES.map((cat) => (
+          <option key={cat.name} value={cat.name}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+      <button className="btn btn-large">Post</button>{" "}
+    </form>
+  );
+}
+
 function CategoryFilter() {
   return (
     <aside>
@@ -129,9 +202,7 @@ function CategoryFilter() {
     </aside>
   );
 }
-function FactList() {
-  // TEMPORARY
-  const facts = initialFacts;
+function FactList({ facts }) {
   return (
     <section>
       <ul className="facts-list">
@@ -147,7 +218,7 @@ function Fact({ fact }) {
     <li className="fact">
       <p>
         {fact.text}
-        React is being developed by Meta (formerly facebook)
+
         <a className="source" href={fact.source} target="_blank">
           Source
         </a>
