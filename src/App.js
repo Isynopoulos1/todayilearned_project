@@ -61,8 +61,13 @@ function App() {
   useEffect(function () {
     async function getFacts() {
       setIsLoading(true);
-      const { data: facts, error } = await supabase.from("facts").select("*");
-      setFacts(facts);
+      const { data: facts, error } = await supabase
+        .from("facts")
+        .select("*")
+        .order("votesInteresting", { ascending: false })
+        .limit(1000);
+      if (!error) setFacts(facts);
+      else alert("there was a problem getting data");
       setIsLoading(false);
     }
     getFacts();
@@ -84,7 +89,7 @@ function App() {
   );
 }
 function Loader() {
-  return <p>Loading...</p>;
+  return <p className="message"> Loading...</p>;
 }
 function Header({ showForm, setShowForm }) {
   const AppTitle = "Today I Learned";
