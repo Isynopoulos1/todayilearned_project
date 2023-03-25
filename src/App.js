@@ -234,6 +234,13 @@ function CategoryFilter({ setCurrentCategory }) {
   );
 }
 function FactList({ facts }) {
+  if (facts.length === 0) {
+    return (
+      <p className="Message">
+        Theres no facts to this category yet. Create a first one! ✌🏽
+      </p>
+    );
+  }
   return (
     <section>
       <ul className="facts-list">
