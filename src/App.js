@@ -145,6 +145,7 @@ function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("http://example.com");
   const [category, setCategory] = useState("");
+  const [isUploading, setUploading] = useState(false);
   const textLength = text.length;
 
   async function HandleSumit(e) {
@@ -167,14 +168,17 @@ function NewFactForm({ setFacts, setShowForm }) {
       // };
 
       // 3.-pload fact to supabase and receive the new fact object
+      setUploading(true);
       const { data: newFact, error } = await supabase
         .from("facts")
         .insert([{ text, source, category }])
         .select();
+      setUploading(false);
+
       console.log(newFact);
 
       // 4. dd the new fact to the ui
-      setFacts((facts) => [newFact, ...facts]);
+      setFacts((facts) => [newFact[0], ...facts]);
       // 5 reset input fields
       setText("");
       setSource("");
@@ -208,7 +212,9 @@ function NewFactForm({ setFacts, setShowForm }) {
           </option>
         ))}
       </select>
-      <button className="btn btn-large">Post</button>{" "}
+      <button className="btn btn-large" disabled={isUploading}>
+        Post
+      </button>{" "}
     </form>
   );
 }
