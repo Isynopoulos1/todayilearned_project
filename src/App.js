@@ -178,7 +178,7 @@ function NewFactForm({ setFacts, setShowForm }) {
       console.log(newFact);
 
       // 4. dd the new fact to the ui
-      setFacts((facts) => [newFact[0], ...facts]);
+      if (!error) setFacts((facts) => [newFact[0], ...facts]);
       // 5 reset input fields
       setText("");
       setSource("");
@@ -266,6 +266,13 @@ function FactList({ facts }) {
   );
 }
 function Fact({ fact }) {
+  async function handleVote() {
+    const { data: updatedFact, error } = await supabase
+      .from("facts")
+      .update({ votesInteresting: fact.votesInteresting + 1 })
+      .eq("id", fact.id)
+      .select();
+  }
   return (
     <li className="fact">
       <p>
@@ -285,7 +292,7 @@ function Fact({ fact }) {
         {fact.category}
       </span>
       <div className="vote-buttons">
-        <button>👍{fact.votesInteresting}</button>
+        <button onClick={handleVote}>👍{fact.votesInteresting}</button>
         <button>🤯 {fact.votesMindblowing}</button>
         <button>⛔️{fact.votesFalse}</button>
       </div>
