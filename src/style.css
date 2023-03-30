@@ -107,6 +107,9 @@ h1 {
 .vote-buttons button:hover {
   background-color: #1c1917;
 }
+.vote-buttons button:disabled {
+  background-color: #44403c;
+}
 ul {
   list-style: none;
 }
