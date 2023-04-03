@@ -34,76 +34,81 @@ const initialFacts = [
 ];
 
 const CATEGORIES = [
-  { name: "technology", color: "#00F49B" },
-  { name: "science", color: "#004DFF" },
-  { name: "finance", color: "#FAAF3D" },
-  { name: "society", color: "#FA8BFF" },
-  { name: "entertainment", color: "#8F79EB" },
-  { name: "health", color: "#EAD0B3" },
-  { name: "history", color: "#8095FF" },
-  { name: "news", color: "#EA53AA" },
+  { name: "technology", color: "#3b82f6" },
+  { name: "science", color: "#16a34a" },
+  { name: "finance", color: "#ef4444" },
+  { name: "society", color: "#eab308" },
+  { name: "entertainment", color: "#db2777" },
+  { name: "health", color: "#14b8a6" },
+  { name: "history", color: "#f97316" },
+  { name: "news", color: "#8b5cf6" },
 ];
-//selecting DOM elements
+
+// Selecting DOM elements
 const btn = document.querySelector(".btn-open");
 const form = document.querySelector(".fact-form");
 const factsList = document.querySelector(".facts-list");
 
-//create DOM elements: render facts in list
+// Create DOM elements: Render facts in list
 factsList.innerHTML = "";
 
-//Load data from supabase
-
+// Load data from Supabase
 loadFacts();
+
 async function loadFacts() {
   const res = await fetch(
-    "https://gxxidlbsnhqhsaiheujp.supabase.co/rest/v1/facts",
+    "https://hwtkikrqvnsrrpkjrytv.supabase.co/rest/v1/facts",
     {
       headers: {
         apikey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4eGlkbGJzbmhxaHNhaWhldWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg5Nzc0NTksImV4cCI6MTk5NDU1MzQ1OX0.bLKNDQUAIK9NwDv8BqBbDpbOnOoKUHRIinsf0tY8LSY",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3dGtpa3Jxdm5zcnJwa2pyeXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg3NTk3ODUsImV4cCI6MTk4NDMzNTc4NX0.l_PGJRds8Lmg17Pn7eqNwFqYWH4rST2gVlTeGCfKTjk",
         authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4eGlkbGJzbmhxaHNhaWhldWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzg5Nzc0NTksImV4cCI6MTk5NDU1MzQ1OX0.bLKNDQUAIK9NwDv8BqBbDpbOnOoKUHRIinsf0tY8LSY",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3dGtpa3Jxdm5zcnJwa2pyeXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg3NTk3ODUsImV4cCI6MTk4NDMzNTc4NX0.l_PGJRds8Lmg17Pn7eqNwFqYWH4rST2gVlTeGCfKTjk",
       },
     }
   );
   const data = await res.json();
-  // const filterData = data.filter((fact) => fact.category === "society");
+  // console.log(data);
+  // const filteredData = data.filter((fact) => fact.category === "technology");
 
-  createFactList(data);
+  createFactsList(data);
 }
 
-function createFactList(dataArr) {
-  const htmlArr = dataArr.map(
-    (fact) => `<li class= "fact"> 
+function createFactsList(dataArray) {
+  // factsList.insertAdjacentHTML("afterbegin", "<li>Jonas</li>");
+
+  const htmlArr = dataArray.map(
+    (fact) => `<li class="fact">
     <p>
     ${fact.text}
-    <a
-      class="source"
-      href="${fact.source}"
-      target="_blank"
-      >Source</a>
+      <a
+        class="source"
+        href="${fact.source}"
+        target="_blank"
+      >(Source)</a>
     </p>
     <span class="tag" style="background-color: ${
       CATEGORIES.find((cat) => cat.name === fact.category).color
-    }">
-    ${fact.category}</span> </li>`
+    }">${fact.category}</span>
+  </li>`
   );
-
   const html = htmlArr.join("");
-
   factsList.insertAdjacentHTML("afterbegin", html);
 }
 
-// toggle form visibility
+// Toggle form visibility
 btn.addEventListener("click", function () {
   if (form.classList.contains("hidden")) {
     form.classList.remove("hidden");
-    btn.textContent = "close";
+    btn.textContent = "Close";
   } else {
     form.classList.add("hidden");
-    btn.textContent = "share a fact";
+    btn.textContent = "Share a fact";
   }
 });
+
+console.log([7, 64, 6, -23, 11].filter((el) => el > 10));
+console.log([7, 64, 6, -23, 11].find((el) => el > 10));
 
 /*
 // if (votesInteresting === votesMindBlowing) {
